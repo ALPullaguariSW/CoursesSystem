@@ -1,0 +1,13 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import StudentCard from "../../components/StudentCard.astro";
+import * as studentService from "../../services/studentService";
+
+const estudiantes = await studentService.obtenerEstudiantes();
+---
+<MainLayout>
+    <h1 class="text-2xl font-bold mb-4">Lista de Estudiantes</h1>
+    <div class="flex flex-wrap gap-4">
+        {estudiantes.map((student) => <StudentCard student={student} />)}
+    </div>
+</MainLayout>
