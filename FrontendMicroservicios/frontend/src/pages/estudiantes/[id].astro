@@ -2,12 +2,35 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import * as studentService from "../../services/studentService";
 const { id } = Astro.params;
-const student = await studentService.getEstudianteById(id)
+const student = await studentService.getEstudianteById(id);
 ---
-  <MainLayout>
-      <div class="bg-white shadow-md rounded-md p-4 mb-4">
-           <h2 class="text-2xl font-bold">{student.nombre} {student.apellido}</h2>
-            <p class="text-gray-700">{student.email}</p>
-           <p class="text-gray-700">Teléfono: {student.telefono}</p>
-         </div>
-    </MainLayout>
+
+<MainLayout>
+  <h2 class="text-2xl font-bold">Editar Estudiante</h2>
+  
+  <form method="POST" action={`/api/estudiantes/editar/${id}`} class="space-y-4">
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="nombre" class="block text-sm font-medium">Nombre</label>
+      <input type="text" id="nombre" name="nombre" value={student.nombre} class="input" required />
+    </div>
+    
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="apellido" class="block text-sm font-medium">Apellido</label>
+      <input type="text" id="apellido" name="apellido" value={student.apellido} class="input" required />
+    </div>
+
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="email" class="block text-sm font-medium">Email</label>
+      <input type="email" id="email" name="email" value={student.email} class="input" required />
+    </div>
+
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="telefono" class="block text-sm font-medium">Teléfono</label>
+      <input type="text" id="telefono" name="telefono" value={student.telefono} class="input" required />
+    </div>
+
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Guardar Cambios
+    </button>
+  </form>
+</MainLayout>

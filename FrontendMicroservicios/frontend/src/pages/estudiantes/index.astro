@@ -1,13 +1,25 @@
 ---
+// Importar el layout, el componente y el servicio de estudiantes
 import MainLayout from '../../layouts/MainLayout.astro';
 import StudentCard from "../../components/StudentCard.astro";
 import * as studentService from "../../services/studentService";
 
+// Obtener los estudiantes en la carga inicial
 const estudiantes = await studentService.obtenerEstudiantes();
 ---
+
 <MainLayout>
-    <h1 class="text-2xl font-bold mb-4">Lista de Estudiantes</h1>
-    <div class="flex flex-wrap gap-4">
-        {estudiantes.map((student) => <StudentCard student={student} />)}
-    </div>
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold">Lista de Estudiantes</h1>
+    <!-- Botón de agregar estudiante -->
+    <a href="/estudiantes/agregar-estudiante" class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
+       Agregar Estudiante
+    </a>
+  </div>
+
+  <div class="flex flex-wrap gap-4">
+    {estudiantes.map((student) => (
+      <StudentCard student={student} />
+    ))}
+  </div>
 </MainLayout>

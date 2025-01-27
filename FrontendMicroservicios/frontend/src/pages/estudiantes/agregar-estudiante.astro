@@ -1,0 +1,70 @@
+---
+// Importar el layout
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// Esta será la lógica para manejar el envío del formulario.
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const studentData = {
+    nombre: formData.get('nombre'),
+    apellido: formData.get('apellido'),
+    email: formData.get('email'),
+    telefono: formData.get('telefono'),
+    fechaNacimiento: formData.get('fechaNacimiento')
+  };
+
+  const response = await fetch('http://localhost:8003/api/estudiantes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(studentData),
+  });
+
+  if (response.ok) {
+    alert('Estudiante agregado con éxito');
+    
+    // Redirigir a la página de estudiantes para recargar la lista
+    window.location.href = '/estudiantes';  // Redirige a la lista de estudiantes
+  } else {
+    alert('Error al agregar estudiante');
+  }
+};
+---
+
+<MainLayout>
+  <h2 class="text-2xl font-bold mb-4">Agregar Estudiante</h2>
+  
+  <form onsubmit={handleSubmit} class="space-y-4">
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="nombre" class="block text-sm font-medium">Nombre</label>
+      <input type="text" id="nombre" name="nombre" class="input" required />
+    </div>
+    
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="apellido" class="block text-sm font-medium">Apellido</label>
+      <input type="text" id="apellido" name="apellido" class="input" required />
+    </div>
+
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="email" class="block text-sm font-medium">Email</label>
+      <input type="email" id="email" name="email" class="input" required />
+    </div>
+
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="fechaNacimiento" class="block text-sm font-medium">Fecha de Nacimiento</label>
+      <input type="date" id="fechaNacimiento" name="fechaNacimiento" class="input" required />
+    </div>
+
+    <div class="bg-white shadow-md rounded-md p-4 mb-4">
+      <label for="telefono" class="block text-sm font-medium">Teléfono</label>
+      <input type="text" id="telefono" name="telefono" class="input" required />
+    </div>
+
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Agregar Estudiante
+    </button>
+  </form>
+</MainLayout>

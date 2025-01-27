@@ -7,15 +7,20 @@ interface Student {
     fechaNacimiento: string;
     telefono: string;
 }
-export async function obtenerEstudiantes(): Promise<Student[]> {
-  const response = await fetch(API_URL);
+// studentService.js
 
-  if (!response.ok) {
-    throw new Error(`Error al obtener estudiantes: ${response.status}`);
+export const obtenerEstudiantes = async () => {
+  const response = await fetch('http://localhost:8003/api/estudiantes');
+  
+  if (response.ok) {
+    return await response.json();
+  } else {
+    console.error('Error al obtener los estudiantes');
+    return [];
   }
-  return await response.json() as Student[];
-}
+};
 
+  
 export async function getEstudianteById(id: number): Promise<Student> {
     const response = await fetch(`${API_URL}/${id}`);
 

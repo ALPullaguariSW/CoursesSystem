@@ -5,9 +5,17 @@ import * as cursoService from "../../services/cursoService";
 
 const cursos = await cursoService.obtenerCursos();
 ---
+
 <MainLayout>
-    <h1 class="text-2xl font-bold mb-4">Lista de Cursos</h1>
-    <div class="flex flex-wrap gap-4">
-       {cursos.map((curso) => <CursoCard curso={curso} />)}
-    </div>
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold">Lista de Cursos</h1>
+    <!-- Botón de agregar curso -->
+    <a href="/agregar-curso" class="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600">
+      Agregar Curso
+    </a>
+  </div>
+
+  <div class="flex flex-wrap gap-4">
+    {cursos.map((curso) => <CursoCard curso={curso} />)}
+  </div>
 </MainLayout>

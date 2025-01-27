@@ -1,15 +1,28 @@
 ---
-const {student} = Astro.props
+// Recibimos el estudiante como propiedad.
+const { student } = Astro.props;
 ---
+
 <div class="bg-white shadow-md rounded-md p-4 mb-4">
     <h2 class="text-xl font-semibold">{student.nombre} {student.apellido}</h2>
     <p class="text-gray-700">{student.email}</p>
-     <p class="text-gray-700">Teléfono: {student.telefono}</p>
-    <div class="mt-2">
-         <a href={`/estudiantes/${student.id}`}
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-             Ver detalles
-         </a>
-     </div>
+    <p class="text-gray-700">Teléfono: {student.telefono}</p>
 
+    <div class="mt-2">
+        <!-- Enlace para editar el estudiante -->
+        <a href={`/estudiantes/editar/${student.id}`} 
+            class="bg-gray-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded ml-2">
+            Editar
+        </a>
+
+        <!-- Formulario para eliminar el estudiante -->
+        <form method="POST" action={`/api/estudiantes/${student.id}`} class="inline-block ml-2">
+            <button 
+                type="submit"
+                class="bg-orange-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                onclick="return confirm('¿Estás seguro de eliminar este estudiante?');">
+                Eliminar
+            </button>
+        </form>
+    </div>
 </div>
