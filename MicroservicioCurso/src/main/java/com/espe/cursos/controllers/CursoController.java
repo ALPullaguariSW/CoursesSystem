@@ -39,6 +39,7 @@ public class CursoController {
         return ResponseEntity.notFound().build();
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<?> editar(@RequestBody Curso curso, @PathVariable Long id) {
         Optional<Curso> cursoOptional = service.findById(id);

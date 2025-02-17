@@ -1,5 +1,5 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
+import MainLayout from '../../../layouts/MainLayout.astro';
 import * as studentService from "../../services/studentService";
 const { id } = Astro.params;
 const student = await studentService.getEstudianteById(id)
