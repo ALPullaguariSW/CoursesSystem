@@ -114,7 +114,5 @@ public class CursoController {
         return ResponseEntity.notFound().build();
     }
 
-    // Puedes agregar endpoints para eliminar usuarios de un curso si es necesario
-    // y los métodos correspondientes en el service.
 
 }

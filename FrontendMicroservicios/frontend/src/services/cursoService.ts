@@ -71,3 +71,14 @@ export const agregarEstudiante = async (cursoId: number, estudiante: any) => {
   return await response.json();
 };
 
+export async function eliminarCurso(id: string) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("No se pudo eliminar el curso");
+  }
+
+  return;
+}

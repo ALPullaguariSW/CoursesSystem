@@ -50,8 +50,8 @@ export async function agregarEstudiante(studentData: Student): Promise<Student> 
 }
 // services/studentService.ts
 
-export async function eliminarEstudiante(id: string) {
-  const response = await fetch(`/api/estudiantes/${id}`, {
+export async function eliminarEstudiante(id: string): Promise<void> {
+  const response = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE',
   });
 
@@ -59,7 +59,7 @@ export async function eliminarEstudiante(id: string) {
     throw new Error('No se pudo eliminar el estudiante');
   }
 
-  return response.json();
+  // Como DELETE no debería devolver un cuerpo, no necesitamos hacer response.json()
 }
 // Actualizar un estudiante por ID
 export async function actualizarEstudiante(id: number, studentData: Student): Promise<Student> {

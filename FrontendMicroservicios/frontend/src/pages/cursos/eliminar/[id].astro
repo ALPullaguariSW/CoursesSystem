@@ -1,0 +1,17 @@
+---
+export const prerender = false;
+
+import { eliminarCurso } from "../../../services/cursoService";
+
+const { id } = Astro.params;
+
+try {
+  await eliminarCurso(id); // Eliminar el curso
+  Astro.response.status = 302;
+  Astro.response.headers.set("Location", "/cursos"); // Redirigir después de eliminar
+} catch (error) {
+  console.error("Error al eliminar el curso:", error);
+  Astro.response.status = 302;
+  Astro.response.headers.set("Location", "/cursos"); // Redirigir incluso si hay error
+}
+---
