@@ -10,7 +10,6 @@ import java.util.List;
 @Table(name = "cursos")
 public class Curso {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,26 +31,34 @@ public class Curso {
         this.creadoEn = LocalDateTime.now();
     }
 
-    @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "curso_id")
-    private List<CursoUsuario> cursoUsuarios;
+    @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CursoUsuario> cursoUsuarios = new ArrayList<>();
 
     @Transient
     private List<Student> usuarios;
 
     public Curso(){
-        cursoUsuarios=new ArrayList<>();
-        usuarios=new ArrayList<>();
+        cursoUsuarios = new ArrayList<>();
+        usuarios = new ArrayList<>();
     }
 
-    public void addCursoUsuario(CursoUsuario cursoUsuario){
+    public void addCursoUsuario(CursoUsuario cursoUsuario) {
         cursoUsuarios.add(cursoUsuario);
+        cursoUsuario.setCurso(this); // Establecer la relación inversa
     }
 
-    public void removeCursoUsuario(CursoUsuario cursoUsuario){
+    public void removeCursoUsuario(CursoUsuario cursoUsuario) {
         cursoUsuarios.remove(cursoUsuario);
+        cursoUsuario.setCurso(null); // Eliminar la relación inversa
     }
 
+    public List<CursoUsuario> getCursoUsuarios() {
+        return cursoUsuarios;
+    }
+
+    public void setCursoUsuarios(List<CursoUsuario> cursoUsuarios) {
+        this.cursoUsuarios = cursoUsuarios;
+    }
 
     // Getters y Setters
     public Long getId() {

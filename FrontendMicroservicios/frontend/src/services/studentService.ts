@@ -1,13 +1,14 @@
-// studentService.ts
-const API_URL: string = "http://localhost:8003/api/estudiantes";
+// src/services/studentService.ts
+const API_URL: string = import.meta.env.VITE_API_URL_ESTUDIANTES;
 
-interface Student {
-  id?: number; // id es opcional al crear un nuevo estudiante
+export interface Student {
+  id: number; // id es opcional al crear un nuevo estudiante
   nombre: string;
   apellido: string;
   email: string;
   fechaNacimiento: string;
   telefono: string;
+  creadoEn: string;
 }
 
 // Función genérica para peticiones HTTP
@@ -48,7 +49,6 @@ export async function agregarEstudiante(studentData: Student): Promise<Student> 
 
   return await fetchData<Student>(API_URL, options);
 }
-// services/studentService.ts
 
 export async function eliminarEstudiante(id: string): Promise<void> {
   const response = await fetch(`${API_URL}/${id}`, {
@@ -58,9 +58,8 @@ export async function eliminarEstudiante(id: string): Promise<void> {
   if (!response.ok) {
     throw new Error('No se pudo eliminar el estudiante');
   }
-
-  // Como DELETE no debería devolver un cuerpo, no necesitamos hacer response.json()
 }
+
 // Actualizar un estudiante por ID
 export async function actualizarEstudiante(id: number, studentData: Student): Promise<Student> {
   const options: RequestInit = {

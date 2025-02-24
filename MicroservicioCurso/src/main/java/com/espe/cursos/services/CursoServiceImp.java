@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CursoServiceImp implements CursoService {
@@ -54,5 +55,18 @@ public class CursoServiceImp implements CursoService {
 
         }
         return Optional.empty();
+    }
+    @Override
+    public List<Student> listarEstudiantesPorCurso(Long cursoId) {
+        Optional<Curso> cursoOptional = cursoRepository.findById(cursoId);
+        if (cursoOptional.isEmpty()) {
+            // Puedes lanzar una excepción personalizada aquí si lo prefieres.
+            throw new RuntimeException("Curso no encontrado con ID: " + cursoId);
+        }
+
+        Curso curso = cursoOptional.get();
+        return curso.getCursoUsuarios().stream()
+                .map(cursoUsuario -> clientRest.findById(cursoUsuario.getUsuarioId()))
+                .collect(Collectors.toList());
     }
 }

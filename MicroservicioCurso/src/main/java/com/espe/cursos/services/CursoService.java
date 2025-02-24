@@ -13,4 +13,5 @@ public interface CursoService {
 
 
     Optional<Student> addUser(Student student, Long id);
+    List<Student> listarEstudiantesPorCurso(Long cursoId);
 }

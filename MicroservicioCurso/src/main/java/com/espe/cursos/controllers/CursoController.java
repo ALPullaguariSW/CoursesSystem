@@ -95,7 +95,7 @@ public class CursoController {
         }
     }
 
-    @PostMapping("/{id}/usuarios") // Mejorar la semántica del endpoint
+    @PostMapping("/{id}/estudiantes") // Mejorar la semántica del endpoint
     public ResponseEntity<?> agregarUsuario(@RequestBody Student usuario, @PathVariable Long id) {
         Optional<Student> optional;
         try {
@@ -112,6 +112,25 @@ public class CursoController {
             return ResponseEntity.status(HttpStatus.CREATED).body(optional.get());
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/estudiantes")
+    public ResponseEntity<?> listarEstudiantesDelCurso(@PathVariable Long id) {
+        try {
+            List<Student> estudiantes = service.listarEstudiantesPorCurso(id);
+            if (estudiantes != null && !estudiantes.isEmpty()) {
+                return ResponseEntity.ok(estudiantes);
+            } else {
+                return ResponseEntity.notFound().build(); // 404 Si no se encuentran estudiantes para ese curso
+            }
+        } catch (FeignException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Collections.singletonMap("error", "Curso no encontrado: " + ex.getMessage())); //404 Si el curso no existe
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", "Error al listar estudiantes: " + e.getMessage()));
+        }
     }
 
 
