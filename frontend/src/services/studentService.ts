@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 const API_URL = '/api/estudiantes'; // Sin barra final
-
+const API_URL_PORT  = "http://172.190.36.62:8082/api/estudiantes"; //cambia a tu ip
 export interface Student {
     id: number;
     nombre: string;
@@ -28,7 +28,7 @@ export const obtenerEstudiantes = async (): Promise<Student[]> => {
 
 export const getEstudianteById = async (id: number): Promise<Student> => {
     try {
-        const response = await axios.get<Student>(`${API_URL}/${id}`);
+        const response = await axios.get<Student>(API_URL_PORT+"/"+id);
         return response.data;
     } catch (error: any) {
         console.error(`Error al obtener estudiante con ID ${id}:`, error);
@@ -42,7 +42,7 @@ export const getEstudianteById = async (id: number): Promise<Student> => {
 
 export const agregarEstudiante = async (studentData: Omit<Student, 'id' | 'creadoEn'>): Promise<Student> => {
     try {
-        const response = await axios.post<Student>(API_URL, studentData, {
+        const response = await axios.post<Student>(API_URL_PORT, studentData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -60,7 +60,7 @@ export const agregarEstudiante = async (studentData: Omit<Student, 'id' | 'cread
 
 export const actualizarEstudiante = async (id: number, studentData: Omit<Student, 'id' | 'creadoEn'>): Promise<Student> => {
     try {
-        const response = await axios.put<Student>(`${API_URL}/${id}`, studentData, {
+        const response = await axios.put<Student>(API_URL_PORT+"/"+id, studentData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -78,7 +78,7 @@ export const actualizarEstudiante = async (id: number, studentData: Omit<Student
 
 export const eliminarEstudiante = async (id: string): Promise<void> => {
     try {
-        await axios.delete(`${API_URL}/${id}`);
+        await axios.delete(API_URL_PORT+"/"+id);
     } catch (error: any) {
         console.error(`Error al eliminar estudiante con ID ${id}:`, error);
         if (axios.isAxiosError(error)) {

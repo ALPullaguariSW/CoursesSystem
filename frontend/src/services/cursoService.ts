@@ -1,6 +1,7 @@
 // cursoService.ts
 import axios from 'axios';
 
+const API_URL_PORT = "http://172.190.36.62:8081/api/cursos"; //cambia a tu ip y el puerto
 const API_URL = '/api/cursos'; // Sin barra final
 
 export interface Curso {
@@ -37,7 +38,7 @@ export const obtenerCursos = async (): Promise<Curso[]> => {
 
 export const getCursoById = async (id: number): Promise<Curso> => {
     try {
-        const response: ApiResponse<Curso> = await axios.get(`${API_URL}/${id}`);
+        const response: ApiResponse<Curso> = await axios.get(API_URL_PORT+"/"+id);
         return response.data;
     } catch (error) {
         console.error(`Error al obtener curso con ID ${id}:`, error);
@@ -51,7 +52,7 @@ export const getCursoById = async (id: number): Promise<Curso> => {
 
 export const agregarCurso = async (cursoData: Omit<Curso, 'id'>): Promise<Curso> => {
     try {
-        const response: ApiResponse<Curso> = await axios.post(API_URL,cursoData, {
+        const response: ApiResponse<Curso> = await axios.post(API_URL_PORT,cursoData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -69,7 +70,7 @@ export const agregarCurso = async (cursoData: Omit<Curso, 'id'>): Promise<Curso>
 
 export const actualizarCurso = async (id: number, cursoData: Omit<Curso, 'id'>): Promise<Curso> => {
     try {
-        const response: ApiResponse<Curso> = await axios.put(`${API_URL}/${id}`, cursoData, {
+        const response: ApiResponse<Curso> = await axios.put(API_URL_PORT+"/"+id, cursoData, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -87,7 +88,7 @@ export const actualizarCurso = async (id: number, cursoData: Omit<Curso, 'id'>):
 
 export const eliminarCurso = async (id: string): Promise<void> => {
     try {
-        await axios.delete(`${API_URL}/${id}`);
+        await axios.delete(API_URL_PORT+"/"+id);
     } catch (error) {
         console.error(`Error al eliminar curso con ID ${id}:`, error);
         if (axios.isAxiosError(error)) {
@@ -118,7 +119,7 @@ export const getEstudiantesPorCurso = async (cursoId: number): Promise<Student[]
 
 export const agregarEstudianteACurso = async (cursoId: number, studentId: number): Promise<any> => {
     try {
-        const response: ApiResponse<any> = await axios.post(`${API_URL}/${cursoId}/estudiantes`, { id: studentId },  {
+        const response: ApiResponse<any> = await axios.post(`${API_URL}/${cursoId}/estudiantes`, { id: studentId },  { // este si no se como poner porque pones estudiantes API_URL_PORT"/"cursoId+"/"+id tal vez sea algo asi depende de la llamada en el postman 
             headers: {
                 'Content-Type': 'application/json'
             }
