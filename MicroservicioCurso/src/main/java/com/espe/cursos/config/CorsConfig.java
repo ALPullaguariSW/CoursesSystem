@@ -1,3 +1,5 @@
+package com.espe.cursos.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -11,10 +13,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Permite CORS para todas las rutas
-                        .allowedOrigins("http://localhost") // Dominios permitidos
-                        .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos permitidos
-                        .allowedHeaders("*"); // Encabezados permitidos
+                registry.addMapping("/**") // Or be more specific, e.g., "/api/cursos"
+                        .allowedOrigins("http://172.190.203.120")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true); // If you need it
             }
         };
     }

@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/estudiantes")
-@CrossOrigin(origins = "http://localhost:5500") // Asegúrate de que el puerto coincida con tu frontend
 
 public class StudentController {
 
